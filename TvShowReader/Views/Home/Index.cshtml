@@ -1,0 +1,143 @@
+﻿@{
+	ViewBag.Title = "TvShowReader";
+}
+
+<link rel="stylesheet" href="~/Content/Loader.css">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script type="text/javascript">
+	function SearchTvShow(name) {
+		$.ajax({
+			type: "GET",
+			url: '@Url.Action("GetSearchResults", "Search")',//"Search/GetSearchResults",
+			data: { 'tvShowName': name },
+			success: function (data) {
+				console.log(data);
+				if (data.length > 0) {
+					LoadTable(data);
+				} else {
+					$("#searchResultsTable").append('<tr><td><h3>Brak wyników</h3></td></tr>');
+				}
+			}
+		});
+	}
+
+	function LoadTable(result) {
+		var rows = "";
+		for (var i = 0; i < result.length; i++) {
+			rows += '<tr><td>' + result[i] + '</td></tr>';
+		}
+		$("#searchResultsTable").append('<tr><th></th></td>');
+		$("#searchResultsTable").append(rows);
+	}
+
+	function Search() {
+		$("#searchResultsTable tbody tr").remove();
+
+		$('#searchResults').show();
+
+		var searchValue = $("#searchBox").val();
+		SearchTvShow(searchValue);
+		SaveSearchQuery(searchValue);
+	}
+
+	function LastSearchedLinkClicked(query) {
+		$("#searchBox").val(query);
+		Search(query);
+	}
+
+	function SaveSearchQuery(query) {
+		$.ajax({
+			type: "POST",
+			url: "/Search/SaveSearch",//'@Url.Action("SaveSearch", "Search")',
+			data: { 'query': query },
+			success: function () {
+				console.log("Saved" + query);
+			}
+		});
+	}
+
+	function GetLastSearches() {
+		$.ajax({
+			type: "GET",
+			url: "/Search/GetLastSearches",//'@Url.Action("GetLastSearches","Search")',//"Search/GetLastSearches"//,
+			data: {},
+			success: function (data) {
+				$("#LastSearches li").remove();
+				var listItems = "";
+				for (var i = 0; i < data.length; i++) {
+					listItems += '<li><a href="#" id="LastSearchedQuery">' + data[i] + '</a></li>';
+				}
+
+				$('#LastSearches').append(listItems);
+
+				$('#LastSearches a').click(function (e) {
+					var query = $(this).text();
+					LastSearchedLinkClicked(query);
+				});
+			}
+		});
+	}
+
+	$(document).ready(function () {
+		$('#searchResults').hide();
+
+		$('#searchTvShow').click(function () {
+			Search();
+			GetLastSearches();
+		});
+
+		$('#LastSearches a').click(function (e) {
+			console.log("Clicked");
+			var query = $(this).text();
+			LastSearchedLinkClicked(query);
+		});
+
+		$('#searchBox').keypress(function (event) {
+			if (event.keyCode == 13 || event.which == 13) {
+				Search();
+				GetLastSearches();
+				event.preventDefault();
+			}
+		});
+
+		var $loadingPlace = $("#toBeLoaded");
+		$(document).ajaxStart(function () {
+			$loadingPlace.addClass("loader");
+		});
+		$(document).ajaxStop(function () {
+			$loadingPlace.removeClass("loader");
+		});
+
+		GetLastSearches();
+	});
+
+</script>
+
+<h1>Find latest episodes for:</h1>
+
+<div>
+	<div id="custom-search-input">
+		<div class="input-group col-md-12">
+			<input type="search" class="form-control input-lg" placeholder="Enter name of a tv show" id="searchBox" autofocus />
+			<span class="input-group-btn">
+				<button class="btn btn-info btn-lg" type="button" id="searchTvShow">
+					<i class="glyphicon glyphicon-search"></i>
+				</button>
+			</span>
+		</div>
+	</div>
+</div>
+
+<div id="searchResults" class="row">
+	<div id="toBeLoaded"></div>
+	<h2>Search results:</h2>
+	<table id="searchResultsTable" class=".table-striped"></table>
+</div>
+
+<div id="searchResultsArchive" class="row">
+	Latest search results for tv shows (click on a name and the search box will fill in and automatically submit)
+	@Html.Partial("~/Views/Search/_LastSearches.cshtml")
+</div>
+
+
