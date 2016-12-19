@@ -40,6 +40,7 @@ namespace TvShowReader.Controllers
         foreach (HtmlNode post in elements)
         {
           string linkForEpisode = post.ChildNodes.FindFirst("h2").ChildNodes.FindFirst("a").OuterHtml;
+          linkForEpisode = linkForEpisode.Insert(linkForEpisode.IndexOf("title") - 1, "target=\"_blank\"");
 
           links.Add(linkForEpisode);
         }
@@ -63,7 +64,11 @@ namespace TvShowReader.Controllers
       {
         LastSearches.Add(query);
       }
-
+      else
+      {
+        LastSearches.Remove(query);
+        LastSearches.Add(query);
+      }
     }
   }
 }

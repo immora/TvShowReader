@@ -49,7 +49,7 @@
 	function SaveSearchQuery(query) {
 		$.ajax({
 			type: "POST",
-			url: "/Search/SaveSearch",//'@Url.Action("SaveSearch", "Search")',
+			url: '@Url.Action("SaveSearch", "Search")',//"/Search/SaveSearch",//
 			data: { 'query': query },
 			success: function () {
 				console.log("Saved" + query);
@@ -60,7 +60,7 @@
 	function GetLastSearches() {
 		$.ajax({
 			type: "GET",
-			url: "/Search/GetLastSearches",//'@Url.Action("GetLastSearches","Search")',//"Search/GetLastSearches"//,
+			url: '@Url.Action("GetLastSearches","Search")',//'@Url.Action("GetLastSearches","Search")',//"Search/GetLastSearches"//,
 			data: {},
 			success: function (data) {
 				$("#LastSearches li").remove();
@@ -136,7 +136,7 @@
 </div>
 
 <div id="searchResultsArchive" class="row">
-	Latest search results for tv shows (click on a name and the search box will fill in and automatically submit)
+	<h2>Latest search results for:</h2>
 	@Html.Partial("~/Views/Search/_LastSearches.cshtml")
 </div>
 

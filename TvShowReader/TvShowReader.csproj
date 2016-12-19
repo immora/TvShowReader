@@ -159,6 +159,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Aurelia\src\.eslintrc.json" />
+    <Content Include="AppSettings.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -188,6 +189,7 @@
     <Content Include="Views\Aurelia\_LastSearches.cshtml" />
     <Content Include="Views\Aurelia\Index.cshtml" />
     <Content Include="Views\Search\_LastSearches.cshtml" />
+    <Content Include="Views\Home\NextEpisode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,5 +11,10 @@ namespace TvShowReader.Controllers
 		{
 			return View();
 		}
-	}
+
+    public ActionResult NextEpisode()
+    {
+      return View();
+    }
+  }
 }
