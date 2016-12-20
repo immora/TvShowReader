@@ -1,0 +1,33 @@
+﻿@{
+	ViewBag.Title = "TvShowReader";
+}
+@model TvShowReader.Models.TvShowViewModel
+
+<link rel="stylesheet" href="~/Content/Loader.css">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function () {
+	
+	});
+
+</script>
+
+
+<div id="notWatchedEpisodes" class="row">
+
+	<ul class="list-group">
+		<li class="list-group-item">
+			<span class="badge">@Model.TvShows..Episodes.Count</span>
+			@Model.Name
+			<div class="">
+				<table id="searchResultsTable" class=".table-striped"></table>
+			</div>
+		</li>
+	</ul>
+
+</div>
+
+
+

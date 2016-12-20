@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using HtmlAgilityPack;
+using TvShowReader.Models;
 
 namespace TvShowReader.Services
 {
-	public class NextEpisodeService : IEpisodeService
+	public class OnlineEpisodeService : IEpisodeService
 	{
 		private string login = ConfigurationManager.AppSettings["NextEpisodeLogin"];
 		private string password = ConfigurationManager.AppSettings["NextEpisodePassword"];
@@ -25,5 +27,9 @@ namespace TvShowReader.Services
 			}
 		}
 
+	  public List<TvShow> GetEpisodes(string fileName = null)
+	  {
+	    throw new NotImplementedException();
+	  }
 	}
 }
